@@ -20,7 +20,4 @@ public class Producto {
 
     private double precio;
 
-    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
-    private List<Venta> ventas;
-
 }
