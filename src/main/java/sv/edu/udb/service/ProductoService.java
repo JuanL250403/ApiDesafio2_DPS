@@ -46,4 +46,10 @@ public class ProductoService {
 
         return productoMapper.toProductoResponse(productoVendido);
     }
+
+    public List<ProductoResponse> buscarProductoNombre(String nombre){
+        List<Producto> productos = productoRepository.buscarProductoNomnbre(nombre);
+
+        return productoMapper.toProductoResponseList(productos);
+    }
 }

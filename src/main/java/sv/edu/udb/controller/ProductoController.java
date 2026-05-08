@@ -2,6 +2,7 @@ package sv.edu.udb.controller;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.bv.time.futureorpresent.FutureOrPresentValidatorForOffsetDateTime;
 import org.springframework.web.bind.annotation.*;
 import sv.edu.udb.controller.request.ProductoRequest;
 import sv.edu.udb.controller.response.ProductoResponse;
@@ -17,17 +18,20 @@ public class ProductoController {
     private final ProductoService productoService;
 
     @GetMapping
-    public List<ProductoResponse> obtenerProcutos(){
+    public List<ProductoResponse> obtenerProcutos(@RequestParam(name = "nombre", required = false) String nombre) {
+        if (nombre != null) {
+            return productoService.buscarProductoNombre(nombre);
+        }
         return productoService.obtenerProductos();
     }
 
     @GetMapping("/{id}")
-    public ProductoResponse obtenerProducto(@PathVariable("id") Long id){
+    public ProductoResponse obtenerProducto(@PathVariable("id") Long id) {
         return productoService.obtenerProducto(id);
     }
 
     @PutMapping("/{id}")
-    public ProductoResponse venderProducto(@PathVariable("id") Long id, @RequestBody ProductoRequest producto){
+    public ProductoResponse venderProducto(@PathVariable("id") Long id, @RequestBody ProductoRequest producto) {
         return productoService.venderProducto(id, producto);
     }
 }
